@@ -1,5 +1,12 @@
 {
-  "name": "claude-reduced-system-prompt",
+  "name": "claude-tools",
   "owner": { "name": "TrueNight" },
-  "plugins": [{ "name": "defer-rare-tools", "source": "./" }]
+  "description": "Claude Code plugins by TrueNight",
+  "plugins": [
+    {
+      "name": "cc-lean-system-tools",
+      "source": "./plugins/cc-lean-system-tools",
+      "description": "Moves rarely used built-in tools behind ToolSearch so their schemas stay out of every turn's context"
+    }
+  ]
 }

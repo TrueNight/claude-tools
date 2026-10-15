@@ -2,7 +2,7 @@
 
 A Claude Code mod that shrinks the tool definitions sent with every request by moving rarely used built-in tools behind ToolSearch.
 
-Claude Code sends the full schema of each non-deferred built-in tool on every turn. Some of them are large and seldom used: the Artifact tool alone is about 9k tokens. This mod marks these tools as deferred, so the model sees only their names and loads a schema through ToolSearch when it actually needs the tool:
+Claude Code sends the full schema of each non-deferred built-in tool on every turn. Some of them are large and seldom used: the Artifact tool alone is about half of all the tool definitions sent upfront. This mod marks these tools as deferred, so the model sees only their names and loads a schema through ToolSearch when it actually needs the tool:
 
 - `Artifact`
 - `Workflow`
@@ -12,7 +12,7 @@ Claude Code sends the full schema of each non-deferred built-in tool on every tu
 - `ListAgents`
 - `AskUserQuestion`
 
-In the author's sessions this cut the upfront tool definitions from about 17.8k to 3.3k tokens per request. Every tool stays available.
+In the author's sessions this cut the tool definitions sent with each request by about 80%. Every tool stays available.
 
 ## Install
 

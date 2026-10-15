@@ -1,6 +1,23 @@
 {
   "name": "cc-lean-system-tools",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Moves rarely used built-in tools behind ToolSearch so their schemas stay out of every turn's context",
-  "author": { "name": "TrueNight" }
+  "author": { "name": "TrueNight" },
+  "userConfig": {
+    "defer": {
+      "type": "string",
+      "multiple": true,
+      "title": "Tools to defer",
+      "description": "Tool names to move behind ToolSearch. Setting this replaces the default list; an empty list defers nothing.",
+      "default": [
+        "Artifact",
+        "Workflow",
+        "ScheduleWakeup",
+        "ReportFindings",
+        "ReadNotifications",
+        "ListAgents",
+        "AskUserQuestion"
+      ]
+    }
+  }
 }

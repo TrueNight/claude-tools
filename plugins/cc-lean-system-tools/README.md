@@ -38,7 +38,31 @@ In the desktop app, where `/plugin` does not run: click + next to the prompt box
 
 ## Changing the list
 
-Edit `DEFERRED_TOOLS` in `hooks/register.ts`. To remove a tool from context entirely instead of deferring it, add its bare name to `permissions.deny` in `settings.json`.
+The `defer` option holds the tool names to defer, and defaults to the list above. Your own list replaces the default rather than adding to it, and an empty list defers nothing.
+
+From a shell, pass the names as one comma-separated string:
+
+```
+echo '{"defer": "Artifact, Workflow, ScheduleWakeup, WebFetch"}' | claude plugin configure cc-lean-system-tools@claude-tools --values-stdin
+```
+
+Inside Claude Code, run `/plugin configure cc-lean-system-tools@claude-tools`. Or set it under `pluginConfigs` in `~/.claude/settings.json`, as an array or a comma-separated string:
+
+```json
+{
+  "pluginConfigs": {
+    "cc-lean-system-tools@claude-tools": {
+      "options": {
+        "defer": ["Artifact", "Workflow", "ScheduleWakeup", "WebFetch"]
+      }
+    }
+  }
+}
+```
+
+Names match exactly, MCP tools included (`mcp__<server>__<tool>`). Start a new session for a change to take effect.
+
+To remove a tool from context entirely instead of deferring it, add its bare name to `permissions.deny` in `settings.json`.
 
 ## Notes
 

@@ -1,21 +1,24 @@
 import type { Register } from 'claude-code'
 
-// Few sessions call these, so carrying each full schema on every turn costs
-// more than one ToolSearch load in the session that does.
-export const DEFERRED_TOOLS = [
-  'Artifact',
-  'Workflow',
-  'ScheduleWakeup',
-  'ReportFindings',
-  'ReadNotifications',
-  'ListAgents',
-  'AskUserQuestion',
-] as const
+const escapeRegExp = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
-const DEFERRED = new RegExp(`^(${DEFERRED_TOOLS.join('|')})$`)
+// settings.json can hold the list as an array, but `claude plugin configure`
+// saves it as one comma-separated string.
+const toolNames = (value: unknown): string[] =>
+  (Array.isArray(value) ? value : typeof value === 'string' ? value.split(',') : [])
+    .map(name => String(name).trim())
+    .filter(name => name !== '')
 
-export const register: Register = on => {
-  on('tool.describe', { tool: DEFERRED }, async ($, e, next) => ({
+// The `defer` option's default in plugin.json lists built-in tools few
+// sessions call: carrying each full schema on every turn costs more than one
+// ToolSearch load in the session that does. A user's list replaces it.
+export const register: Register = (on, options) => {
+  const tools = toolNames(options.defer)
+  if (tools.length === 0) return
+
+  const deferred = new RegExp(`^(${tools.map(escapeRegExp).join('|')})$`)
+
+  on('tool.describe', { tool: deferred }, async ($, e, next) => ({
     ...(await next(e)),
     isDeferred: true,
   }))

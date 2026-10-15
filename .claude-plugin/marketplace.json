@@ -1,0 +1,5 @@
+{
+  "name": "claude-reduced-system-prompt",
+  "owner": { "name": "TrueNight" },
+  "plugins": [{ "name": "defer-rare-tools", "source": "./" }]
+}

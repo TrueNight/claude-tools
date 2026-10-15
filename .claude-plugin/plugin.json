@@ -1,0 +1,6 @@
+{
+  "name": "defer-rare-tools",
+  "version": "0.1.0",
+  "description": "Moves rarely used built-in tools behind ToolSearch so their schemas stay out of every turn's context",
+  "author": { "name": "TrueNight" }
+}
